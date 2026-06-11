@@ -245,6 +245,8 @@
         <li><i class="ti ti-check"></i><span id="c3">Migrare la Microsoft 365 — licențiere predictibilă per utilizator</span></li>
         <li><i class="ti ti-check"></i><span id="c4">Reduci costurile de recuperare după incidente prin backup corect</span></li>
         <li><i class="ti ti-check"></i><span id="c5">Scalezi resursele cloud doar când ai nevoie</span></li>
+        <li><i class="ti ti-check"></i><span id="c6">Automatizezi procese repetitive — reduci orele de muncă manuală și erorile umane</span></li>
+        <li><i class="ti ti-check"></i><span id="c7">Aplicații custom în loc de licențe scumpe — plătești doar ce ai nevoie</span></li>
       </ul>
     </div>
     <div class="benefit-block security">
@@ -380,6 +382,8 @@
         <option value="virt">Virtualizare & Cloud Migration</option>
         <option value="hybrid">Hybrid Cloud</option>
         <option value="network">Rețea & Firewall</option>
+        <option value="custom-app">Dezvoltare Aplicație Custom</option>
+        <option value="automation">Automatizări & Integrări AI</option>
         <option value="other">Altceva</option>
       </select>
       <textarea id="cf-msg" placeholder="Descrie pe scurt ce ai nevoie..."></textarea>
@@ -420,6 +424,8 @@ const t = {
     costP:'Prin virtualizare, migrare cloud și eliminarea hardware-ului vechi, companiile economisesc semnificativ față de infrastructura on-premise tradițională.',
     c1:'Elimini costuri de mentenanță hardware fizic', c2:'Consolidezi servere prin virtualizare — mai puțin consum energie',
     c3:'Migrare la Microsoft 365 — licențiere predictibilă per utilizator', c4:'Reduci costurile de recuperare după incidente prin backup corect', c5:'Scalezi resursele cloud doar când ai nevoie',
+    c6:'Automatizezi procese repetitive — reduci orele de muncă manuală și erorile umane',
+    c7:'Aplicații custom în loc de licențe scumpe — plătești doar ce ai nevoie',
     secStat:'+80%', secStatLabel:'îmbunătățire postura de securitate', secH:'Crești securitatea cibernetică',
     secP:'Infrastructura neactualizată și configurată greșit este principala cauză a incidentelor de securitate. Noi eliminăm vulnerabilitățile și implementăm controale moderne.',
     s1:'MFA și Conditional Access — blochezi 99% din atacurile pe cont', s2:'Elimini sisteme End-of-Life care nu mai primesc patch-uri de securitate',
@@ -432,6 +438,8 @@ const t = {
     sv4h:'Virtualizare & Cloud Migration', sv4p:'VMware ESXi, Hyper-V, Proxmox. Migrare P2V, consolidare infrastructură și migrare servicii în cloud pentru reducere costuri.',
     sv5h:'Hybrid Cloud', sv5p:'Integrare On-Premise cu Azure. Administrare mediu hibrid și sincronizare identități.',
     sv6h:'Rețea & Firewall', sv6p:'Fortigate, VLAN, NAT, VPN. Configurare și administrare infrastructură de rețea.',
+    sv7h:'Dezvoltare Aplicații Custom', sv7p:'Aplicații web construite exact pe procesele tale — fără funcționalități inutile, fără licențe scumpe. Integrate direct cu infrastructura și ecosistemul Microsoft existent.',
+    sv8h:'Automatizări & Integrări AI', sv8p:'Automatizăm fluxurile repetitive între aplicațiile tale — ERP, CRM, email, facturare, raportare. Integrăm soluții AI pentru a reduce munca manuală și a crește eficiența operațională.',
     aboutTag:'Despre noi', aboutH2:'Expertiză tehnică, rezultate reale',
     aboutP1:'Eldra-IT este o echipă specializată în infrastructură Microsoft, cu experiență practică în medii hibride, migrări cloud și securitate endpoint. Lucrăm cu companii din România și Europa, livrând proiecte end-to-end cu impact măsurabil.',
     aboutP2:'Abordăm fiecare proiect cu atenție la detalii, documentare riguroasă și comunicare transparentă — de la planificare până la go-live și suport post-implementare.',
@@ -461,6 +469,8 @@ const t = {
     costP:'Through virtualization, cloud migration and eliminating legacy hardware, companies save significantly compared to traditional on-premise infrastructure.',
     c1:'Eliminate physical hardware maintenance costs', c2:'Consolidate servers through virtualization — lower energy consumption',
     c3:'Migrate to Microsoft 365 — predictable per-user licensing', c4:'Reduce incident recovery costs with a proper backup strategy', c5:'Scale cloud resources only when you need them',
+    c6:'Automate repetitive processes — reduce manual work hours and human errors',
+    c7:'Custom apps instead of expensive licenses — pay only for what you need',
     secStat:'+80%', secStatLabel:'improvement in security posture', secH:'Improve your cybersecurity',
     secP:'Outdated and misconfigured infrastructure is the leading cause of security incidents. We eliminate vulnerabilities and implement modern security controls.',
     s1:'MFA and Conditional Access — block 99% of account-based attacks', s2:'Eliminate End-of-Life systems that no longer receive security patches',
@@ -473,6 +483,8 @@ const t = {
     sv4h:'Virtualization & Cloud Migration', sv4p:'VMware ESXi, Hyper-V, Proxmox. P2V migration, infrastructure consolidation and cloud migration for cost reduction.',
     sv5h:'Hybrid Cloud', sv5p:'On-premise to Azure integration. Hybrid environment management and identity sync.',
     sv6h:'Network & Firewall', sv6p:'Fortigate, VLAN, NAT, VPN. Network infrastructure configuration and management.',
+    sv7h:'Custom Application Development', sv7p:'Web applications built around your specific business processes — no unnecessary features, no expensive licenses. Integrated directly with your existing infrastructure and Microsoft ecosystem.',
+    sv8h:'Automation & AI Integration', sv8p:'We automate repetitive workflows between your applications — ERP, CRM, email, invoicing, reporting. We integrate AI solutions to reduce manual work and increase operational efficiency.',
     aboutTag:'About us', aboutH2:'Technical expertise, real results',
     aboutP1:'Eldra-IT is a specialist team focused on Microsoft infrastructure, with hands-on experience in hybrid environments, cloud migrations and endpoint security. We work with businesses across Romania and Europe, delivering end-to-end projects with measurable impact.',
     aboutP2:'We approach every project with attention to detail, thorough documentation and transparent communication — from planning through go-live and post-implementation support.',
@@ -512,7 +524,7 @@ function setLang(lang) {
   document.getElementById('cost-stat-label').textContent = d.costStatLabel;
   document.getElementById('cost-h').textContent = d.costH;
   document.getElementById('cost-p').textContent = d.costP;
-  ['c1','c2','c3','c4','c5','s1','s2','s3','s4','s5'].forEach(k => document.getElementById(k).textContent = d[k]);
+  ['c1','c2','c3','c4','c5','c6','c7','s1','s2','s3','s4','s5'].forEach(k => document.getElementById(k).textContent = d[k]);
   document.getElementById('sec-stat').textContent = d.secStat;
   document.getElementById('sec-stat-label').textContent = d.secStatLabel;
   document.getElementById('sec-h').textContent = d.secH;
@@ -522,7 +534,7 @@ function setLang(lang) {
   document.getElementById('svc-sub').textContent = d.svcSub;
   document.getElementById('dr-badge').textContent = d.drBadge;
   ['dr-tag1','dr-tag2','dr-tag3','dr-tag4'].forEach((id,i) => document.getElementById(id).textContent = d['drTag'+(i+1)]);
-  [1,2,3,4,5,6].forEach(n => { document.getElementById('sv'+n+'h').textContent = d['sv'+n+'h']; document.getElementById('sv'+n+'p').textContent = d['sv'+n+'p']; });
+  [1,2,3,4,5,6,7,8].forEach(n => { document.getElementById('sv'+n+'h').textContent = d['sv'+n+'h']; document.getElementById('sv'+n+'p').textContent = d['sv'+n+'p']; });
   document.getElementById('about-tag').textContent = d.aboutTag;
   document.getElementById('about-h2').textContent = d.aboutH2;
   document.getElementById('about-p1').textContent = d.aboutP1;
