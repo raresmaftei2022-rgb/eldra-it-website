@@ -180,7 +180,47 @@
       .section { padding: 3rem 1.5rem; }
       .section-full { padding: 3rem 1.5rem; }
     }
-  </style>
+  
+/* SERVICE MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); z-index: 1000;
+  align-items: flex-start; justify-content: center;
+  padding: 2rem 1rem; overflow-y: auto;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--bg2); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); width: 100%; max-width: 580px;
+  padding: 1.75rem; position: relative; margin: auto;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+}
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 50%; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px; color: var(--text2); transition: background .15s;
+}
+.modal-close:hover { background: var(--border); color: var(--text); }
+.modal-header { display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+.modal-icon { width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(29,158,117,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.modal-icon i { font-size: 24px; color: var(--green); }
+.modal-title { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.modal-subtitle { font-size: 12px; color: var(--text2); }
+.modal-body p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 1.25rem; }
+.detail-section { margin-bottom: 1.25rem; }
+.detail-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 8px; }
+.detail-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.detail-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--text2); line-height: 1.5; }
+.detail-list li i { font-size: 15px; color: var(--green); margin-top: 1px; flex-shrink: 0; }
+.tech-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.tech-pill { font-size: 12px; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--border); background: var(--bg3); color: var(--text2); }
+.modal-cta { background: var(--green); color: white; border: none; border-radius: var(--radius-md); padding: 11px 20px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; margin-top: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background .15s; }
+.modal-cta:hover { background: var(--green-dark); }
+.svc-click-hint { font-size: 11px; color: var(--green); margin-top: 10px; display: flex; align-items: center; gap: 4px; opacity: 0.8; }
+
+</style>
 </head>
 <body>
 
@@ -274,17 +314,17 @@
   <h2 id="svc-h2">Ce oferim</h2>
   <p class="sub" id="svc-sub">Soluții complete pentru infrastructura ta IT — de la migrare și securitate, la aplicații custom și automatizări cu AI.</p>
   <div class="services-grid">
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('m365')" style="cursor:pointer;">
       <div class="service-icon"><i class="ti ti-mail"></i></div>
       <h3 id="sv1h">Migrare Microsoft 365</h3>
       <p id="sv1p">Exchange, cPanel → Exchange Online. Cutover, staged sau hybrid, fără pierderi de date.</p>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('security')" style="cursor:pointer;">
       <div class="service-icon"><i class="ti ti-shield-check"></i></div>
       <h3 id="sv2h">Securitate & Identitate</h3>
       <p id="sv2p">MFA, Conditional Access, Entra ID, Intune. Hardening complet al mediului Microsoft 365.</p>
     </div>
-    <div class="service-card featured">
+    <div class="service-card featured" onclick="openModal('dr')" style="cursor:pointer;">
       <span class="featured-badge" id="dr-badge">Recomandat</span>
       <div class="service-icon"><i class="ti ti-urgent"></i></div>
       <h3 id="sv3h">Disaster Recovery</h3>
@@ -296,27 +336,27 @@
         <span class="dr-tag" id="dr-tag4">Veeam & Synology</span>
       </div>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('virt')" style="cursor:pointer;">
       <div class="service-icon"><i class="ti ti-server"></i></div>
       <h3 id="sv4h">Virtualizare & Cloud Migration</h3>
       <p id="sv4p">VMware ESXi, Hyper-V, Proxmox. Migrare P2V, consolidare infrastructură și migrare servicii în cloud pentru reducere costuri.</p>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('hybrid')" style="cursor:pointer;">
       <div class="service-icon"><i class="ti ti-cloud"></i></div>
       <h3 id="sv5h">Hybrid Cloud</h3>
       <p id="sv5p">Integrare On-Premise cu Azure. Administrare mediu hibrid și sincronizare identități.</p>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('network')" style="cursor:pointer;">
       <div class="service-icon"><i class="ti ti-network"></i></div>
       <h3 id="sv6h">Rețea & Firewall</h3>
       <p id="sv6p">Fortigate, VLAN, NAT, VPN. Configurare și administrare infrastructură de rețea.</p>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('apps')" style="cursor:pointer;">
       <div class="service-icon"><i class="ti ti-code"></i></div>
       <h3 id="sv7h">Dezvoltare Aplicații Custom</h3>
       <p id="sv7p">Aplicații web construite exact pe procesele tale — fără funcționalități inutile, fără licențe scumpe. Integrate direct cu infrastructura și ecosistemul Microsoft existent.</p>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="openModal('ai')" style="cursor:pointer;">
       <div class="service-icon"><i class="ti ti-robot"></i></div>
       <h3 id="sv8h">Automatizări & Integrări AI</h3>
       <p id="sv8p">Automatizăm fluxurile repetitive între aplicațiile tale — ERP, CRM, email, facturare, raportare. Integrăm soluții AI pentru a reduce munca manuală și a crește eficiența operațională.</p>
@@ -629,6 +669,130 @@ async function submitForm() {
     document.getElementById('send-btn-txt').textContent = t[lang].sendBtn;
   }
 }
+
+// SERVICE MODAL DATA
+const services = {
+  m365: {
+    icon:'ti-mail', title:'Migrare Microsoft 365',
+    subtitle:'Exchange Online · Cutover · Staged · Hybrid',
+    desc:'Migram sistemele de email ale companiei tale catre Microsoft 365 — indiferent de platforma de plecare (Exchange Server, cPanel, Gmail). Fiecare proiect include audit, planificare, executie si documentare.',
+    inclus:['Audit complet al mediului existent — conturi, distributii, shared mailboxes, aliasuri','Configurare tenant Microsoft 365 + politici de securitate (MFA, Conditional Access)','Migrare cutover, staged sau hybrid — in functie de dimensiunea companiei','Configurare Outlook si dispozitive mobile pentru toti utilizatorii','Testare completa post-migrare si documentare tehnica'],
+    tech:['Exchange Online','Microsoft 365','Entra ID','Outlook','MFA'],
+    rezultate:['0 pierderi de date','Downtime sub 2 ore','Reducere costuri ~35%','Securitate imbunatatita']
+  },
+  security: {
+    icon:'ti-shield-check', title:'Securitate & Identitate',
+    subtitle:'MFA · Conditional Access · Entra ID · Intune',
+    desc:'Securizam mediul Microsoft 365 si identitatile utilizatorilor folosind cele mai bune practici Microsoft moderne. MFA singur nu este suficient — implementam un model de securitate pe mai multe straturi.',
+    inclus:['Activare si configurare MFA pentru toti utilizatorii','Politici Conditional Access — acces doar din locatii si dispozitive aprobate','Configurare Microsoft Entra ID','Deployment Microsoft Intune — management endpoint-uri si dispozitive mobile','Hardening complet al mediului M365','Raport de securitate si recomandari post-implementare'],
+    tech:['MFA','Conditional Access','Entra ID','Intune','Microsoft Defender'],
+    rezultate:['+80% imbunatatire postura securitate','99% atacuri pe cont blocate','Control complet dispozitive','Conformitate GDPR']
+  },
+  dr: {
+    icon:'ti-urgent', title:'Disaster Recovery',
+    subtitle:'Backup 3-2-1-0 · RTO & RPO · Plan DR · Veeam · Synology',
+    desc:'Implementam strategii complete de Disaster Recovery — de la backup corect configurat la planuri detaliate de recuperare in caz de incident. 93% din atacurile ransomware vizeaza backup-urile — noi te protejam.',
+    inclus:['Audit al strategiei de backup existente','Implementare strategie 3-2-1-0: 3 copii, 2 tipuri stocare, 1 off-site, 0 erori','Configurare Veeam Backup & Replication + NAS Synology','Definire RTO si RPO specifice companiei tale','Plan DR documentat pentru fiecare tip de incident','Teste lunare de restore cu raport de confirmare'],
+    tech:['Veeam','Synology','Azure Backup','Windows Server Backup'],
+    rezultate:['0 pierderi date dupa ransomware','Recuperare in timp definit (RTO)','Teste restore lunare','Plan DR documentat']
+  },
+  virt: {
+    icon:'ti-server', title:'Virtualizare & Cloud Migration',
+    subtitle:'VMware · Hyper-V · Proxmox · P2V · Consolidare',
+    desc:'Consolidam serverele fizice in masini virtuale si optimizam utilizarea resurselor. Daca ai servere care ruleaza la 10-20% utilizare, platesti pentru hardware inutil. Virtualizarea rezolva asta.',
+    inclus:['Audit servere existente — utilizare, dependente, cerinte','Dimensionare corecta resurse virtuale (CPU, RAM, storage)','Migrare P2V (physical to virtual) cu downtime minim','Configurare Proxmox VE sau Microsoft Hyper-V','Configurare clustering si HA optional','Documentare completa a noului mediu virtualizat'],
+    tech:['VMware ESXi','Proxmox VE','Hyper-V','Veeam','Windows Server'],
+    rezultate:['30-50% reducere costuri hardware','Utilizare resurse optimizata','Failover automat','Backup rapid prin snapshots']
+  },
+  hybrid: {
+    icon:'ti-cloud', title:'Hybrid Cloud',
+    subtitle:'Azure · On-Premise · Azure AD Connect · Hybrid Identity',
+    desc:'Integram infrastructura ta on-premise cu Microsoft Azure, creand un mediu hibrid in care identitatile, politicile si resursele sunt sincronizate si gestionate unitar.',
+    inclus:['Configurare Azure AD Connect pentru sincronizare identitati','Implementare Hybrid Exchange daca este necesar','Configurare Azure Virtual Network si conectivitate VPN site-to-site','Politici unificate de securitate on-premise + cloud','Migrare graduala servicii din on-premise in Azure','Monitorizare si administrare mediu hibrid'],
+    tech:['Microsoft Azure','Azure AD Connect','Azure VPN','Entra ID','Windows Server'],
+    rezultate:['Identitati unificate','Acces securizat la resurse cloud','Scalabilitate flexibila','Costuri optimizate']
+  },
+  network: {
+    icon:'ti-network', title:'Retea & Firewall',
+    subtitle:'Fortinet FortiGate · VLAN · NAT · VPN · Monitoring',
+    desc:'Configuram si administram infrastructura de retea si solutiile de securitate perimetrica. Un firewall corect configurat este prima linie de aparare impotriva atacurilor externe.',
+    inclus:['Configurare si administrare firewall Fortinet FortiGate','Segmentare retea prin VLAN-uri','Configurare reguli NAT si port forwarding','Implementare VPN site-to-site si client VPN','Monitorizare trafic si alertare anomalii','Audit si hardening configuratie existenta'],
+    tech:['Fortinet FortiGate','VLAN','VPN','NAT','IPS/IDS'],
+    rezultate:['Trafic monitorizat 24/7','Segmentare retea securizata','Acces VPN securizat','Protectie perimetrala']
+  },
+  apps: {
+    icon:'ti-code', title:'Aplicatii Custom',
+    subtitle:'React · Node.js · Integrare Microsoft · Web Apps',
+    desc:'Dezvoltam aplicatii web personalizate pe procesele specifice ale companiei tale — fara functionalitati inutile si fara licente scumpe pentru software generic. Integrate direct cu ecosistemul Microsoft.',
+    inclus:['Analiza cerinte si propunere solutie tehnica','Dezvoltare frontend React + backend Node.js','Integrare cu Microsoft 365, Azure AD, Exchange Online','Autentificare prin Microsoft Entra ID (SSO)','Hosting si deployment pe infrastructura ta sau cloud','Mentenanta si suport post-lansare'],
+    tech:['React','Node.js','Microsoft Graph API','Entra ID','Azure'],
+    rezultate:['Aplicatie adaptata proceselor tale','Integrare nativa Microsoft','Fara licente scumpe','Scalabila si usor de extins']
+  },
+  ai: {
+    icon:'ti-robot', title:'Automatizari & Integrar AI',
+    subtitle:'Automatizari · API Integrations · AI · Eficienta operationala',
+    desc:'Automatizam fluxurile repetitive dintre aplicatiile tale si integram solutii AI pentru a reduce munca manuala si a creste eficienta operationala.',
+    inclus:['Audit procese manuale si identificare oportunitati de automatizare','Integrare intre aplicatii existente (ERP, CRM, email, facturare)','Automatizare fluxuri de aprobare si notificari','Integrare API-uri si webhooks intre sisteme','Implementare solutii AI pentru procesare date si raportare','Dashboard-uri si rapoarte automate'],
+    tech:['REST APIs','Webhooks','Node.js','Python','AI/ML APIs','Microsoft Graph'],
+    rezultate:['Ore de munca manuala eliminate','Zero erori de transfer date','Procese mai rapide','Vizibilitate completa date']
+  }
+};
+
+let currentModal = '';
+
+function openModal(key) {
+  const s = services[key];
+  currentModal = s.title;
+  document.getElementById('modal-icon-i').className = 'ti ' + s.icon;
+  document.getElementById('modal-title').textContent = s.title;
+  document.getElementById('modal-subtitle').textContent = s.subtitle;
+  let html = '<p>' + s.desc + '</p>';
+  html += '<div class="detail-section"><div class="detail-label">Ce include</div><ul class="detail-list">';
+  s.inclus.forEach(function(item) { html += '<li><i class="ti ti-check" aria-hidden="true"></i>' + item + '</li>'; });
+  html += '</ul></div>';
+  html += '<div class="detail-section"><div class="detail-label">Tehnologii</div><div class="tech-pills">';
+  s.tech.forEach(function(t) { html += '<span class="tech-pill">' + t + '</span>'; });
+  html += '</div></div>';
+  html += '<div class="detail-section"><div class="detail-label">Rezultate tipice</div><ul class="detail-list">';
+  s.rezultate.forEach(function(r) { html += '<li><i class="ti ti-check" aria-hidden="true"></i>' + r + '</li>'; });
+  html += '</ul></div>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeOnOverlay(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
 </script>
+
+<!-- SERVICE MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeOnOverlay(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Inchide"><i class="ti ti-x"></i></button>
+    <div class="modal-header">
+      <div class="modal-icon"><i id="modal-icon-i" class="ti ti-star" aria-hidden="true"></i></div>
+      <div>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-subtitle" id="modal-subtitle"></div>
+      </div>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <button class="modal-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});closeModal();">
+      <i class="ti ti-arrow-right"></i> Solicita consultatie gratuita
+    </button>
+  </div>
+</div>
+
 </body>
 </html>
